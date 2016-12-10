@@ -5,12 +5,12 @@ data<-read.csv("all_task_locs.csv")
 
 #Function to process all point patterns:
 
-process.patterns <- function(task.num, env, bw=3, num.sims=1000) {
+process.patterns <- function(task.num, env, bw=3, num.sims=10) {
 
-  task<-subset(data, data$task==task.num && data$environment == env)
+  task<-subset(data, data$task==task.num & data$environment == env)
   
   #Create point pattern object for the data
-  taskPP<-ppp(task$x, task$y, c(0,58), c(0,58))
+  taskPP<-ppp(task$x, task$y, c(0,59), c(0,59))
   png(paste0(c(task.num, env, "points.png"), collapse="_"))
   plot(taskPP, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
   dev.off()
@@ -22,13 +22,13 @@ process.patterns <- function(task.num, env, bw=3, num.sims=1000) {
   dev.off()
   
   #Create grid to run simulations in 
-  uniformgrid<-rsyst(win=c(0,58,0,58), dx=1, dy=1)
+  uniformgrid<-rsyst(win=c(0,59,0,59), dx=1, dy=1)
   
   #Establishing some matrices, variables, etc.
   cutoff<-0.95*num.sims
   simulations<-vector("list", num.sims)
   max.values<-vector("numeric", num.sims)
-  
+
   #Loop to remove random points and simulate new kernel density grids with 23 points 100 times
   #storing each simulation point pattern/kernel map, as well as max value from each density function
   for(i in 1:num.sims) {
@@ -46,7 +46,7 @@ process.patterns <- function(task.num, env, bw=3, num.sims=1000) {
       location.values<-vector("numeric", num.sims) 
       for(i in 1:num.sims) {
         location.values[[i]]<-simulations[[i]]$v[x,y]
-      }      
+      }
       sorted.values<-sort(location.values)
       locations[x,y]<-sorted.values[cutoff]
     }
@@ -73,6 +73,8 @@ process.patterns <- function(task.num, env, bw=3, num.sims=1000) {
 
 for (task in unique(data$task)) {
   for (environment in unique(data$environment)) {
-    process.patterns(task, environment)
+    print(task)
+    print(environment)
+    process.patterns(task, environment, num.sims = 1000)
   }
 }
