@@ -1,7 +1,7 @@
 library(spatstat)
-library(gstat)
+# library(gstat)
 library(spdep)
-library(rgdal)
+# library(rgdal)
 
 data <- read.csv("all_task_locs.csv")
 envs <- unique(data$environment)
@@ -93,7 +93,7 @@ zeros <- matrix(ncol=3481, nrow=3481, 0)
 full_adj <- adj
 full_adj <- cbind(adj, zeros)
 full_adj <- rbind(full_adj, cbind(zeros, adj))
-for (i in 3:4){#length(envs)) {
+for (i in 3:length(envs)) {
   new_row <- zeros
   new_col <- zeros
   for (j in 1:(i-2)) {
