@@ -2,13 +2,13 @@ set description geo866
 set email dolsonem@msu.edu
 set email_when final
 set priority 1
-set walltime 4
+set walltime 16
 set mem_request 1 
 set config_dir config
-set dest_dir /mnt/scratch/dolsonem/spatial_data_analysis/data
+set dest_dir /mnt/scratch/dolsonem/evo_in_space/data
 
-# Environment 50047
-1..100 env_50047 ./avida -s $seed -set ENVIRONMENT_FILE env50047.cfg -set COPY_MUT_PROB 0.0025
+# Environment 50060
+1000..1100 env_50060 ./avida -s $seed -set ENVIRONMENT_FILE env50060.cfg -set COPY_MUT_PROB 0.0025 -set WORLD_GEOMETRY 1
 
 # Environemt 50048
-101..200 env_50048 ./avida -s $seed -set ENVIRONMENT_FILE env50048.cfg -set COPY_MUT_PROB 0.0025
+#101..200 env_50048 ./avida -s $seed -set ENVIRONMENT_FILE env50048.cfg -set COPY_MUT_PROB 0.0025
