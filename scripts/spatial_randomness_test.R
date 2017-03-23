@@ -8,7 +8,7 @@ data<-read.csv("all_task_locs.csv")
 process.patterns <- function(task.num, env, bw=3, num.sims=10) {
 
   task<-subset(data, data$task==task.num & data$environment == env)
-  
+  #print(task)
   #Create point pattern object for the data
   taskPP<-ppp(task$x, task$y, c(0,59), c(0,59))
   png(paste0(c(task.num, env, "points.png"), collapse="_"))
@@ -16,7 +16,7 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   dev.off()
   
   #Kernel Density of point pattern 
-  task.density<-density(taskPP, sigma=bw)
+  task.density<-density(taskPP, sigma=bw, eps=1)
   png(paste0(c(task.num, env, "density.png"), collapse="_"))
   plot(task.density, col=heat.colors(10), main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
   dev.off()
@@ -25,7 +25,7 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   uniformgrid<-rsyst(win=c(0,59,0,59), dx=1, dy=1)
   
   #Establishing some matrices, variables, etc.
-  cutoff<-0.95*num.sims
+  cutoff<-0.99*num.sims
   simulations<-vector("list", num.sims)
   max.values<-vector("numeric", num.sims)
 
@@ -33,7 +33,7 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   #storing each simulation point pattern/kernel map, as well as max value from each density function
   for(i in 1:num.sims) {
     remove<-sample(1:59**2, length(task$x)) #number of points to keep from grid
-    simulations[[i]]<-density(subset.ppp(uniformgrid, remove), bw)
+    simulations[[i]]<-density(subset.ppp(uniformgrid, remove), bw, eps=1)
     max.values[[i]]<-max(simulations[[i]])
   }
   
@@ -65,7 +65,8 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   }
   
   png(paste0(c(task.num, env, "hotspots.png"), collapse="_"))
-  image(hotspots, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
+  #hotspots_im <- apply(hotspots, 2, rev)
+  image(t(hotspots), main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
   dev.off()
   
   write.table(hotspots, file = paste0(c(task.num, env, "hotspots.csv"), collapse="_"), row.names = FALSE, col.names = FALSE, sep=",")
@@ -75,6 +76,6 @@ for (task in unique(data$task)) {
   for (environment in unique(data$environment)) {
     print(task)
     print(environment)
-    process.patterns(task, environment, num.sims = 1000)
+    process.patterns(task, environment, num.sims = 5000)
   }
 }
