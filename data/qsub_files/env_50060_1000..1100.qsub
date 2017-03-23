@@ -1,0 +1,35 @@
+
+#!/bin/bash -login
+#PBS -q main
+#PBS -l walltime=48:00:00,mem=1024mb
+#PBS -N env_50060
+#PBS -o /mnt/scratch/dolsonem/evo_in_space/data/env_50060_message.log
+#PBS -j oe
+#PBS -t 0-100
+#PBS -M dolsonem@msu.edu
+#PBS -l epilogue=/mnt/research/devolab/dist_qsub/email_final.sh
+
+TARGETDIR=/mnt/scratch/dolsonem/evo_in_space/data
+STARTSEED=1000
+seed=$(($STARTSEED + $PBS_ARRAYID))
+JOBTARGET=env_50060"_"$seed
+
+#echo "seed="$seed "jobtarget="$JOBTARGET "targetdir="$TARGETDIR "pbs_arrayid="$PBS_ARRAYID "pbs_jobname="$PBS_JOBNAME "tmpdir="$TMPDIR;
+
+#change directory to the directory this was run from
+cd $PBS_O_WORKDIR
+mkdir $TMPDIR/$JOBTARGET
+cp -r /mnt/ls15/scratch/users/dolsonem/evo_in_space/config/* $TMPDIR/$JOBTARGET
+cd $TMPDIR/$JOBTARGET
+
+./avida -s $seed -set ENVIRONMENT_FILE env50060.cfg -set COPY_MUT_PROB 0.0025 -set WORLD_GEOMETRY 1 2>&1 | cat >> run.log
+python extract_points.py
+
+mkdir $TARGETDIR/$JOBTARGET
+
+gzip -r .
+tar czf dist_transfer.tar.gz .
+
+mv task_locs.csv $TARGETDIR/$JOBTARGET
+mv dist_transfer.tar.gz $TARGETDIR/$JOBTARGET
+rm dist_transfer.tar.gz

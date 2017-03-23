@@ -1,0 +1,35 @@
+
+#!/bin/bash -login
+#PBS -q main
+#PBS -l walltime=3:59:00,mem=1024mb
+#PBS -N xtract
+#PBS -o /mnt/scratch/dolsonem/evo_in_space/data/env_50048_message.log
+#PBS -j oe
+#PBS -t 0-100
+#PBS -M dolsonem@msu.edu
+#PBS -l epilogue=/mnt/research/devolab/dist_qsub/email_final.sh
+
+TARGETDIR=/mnt/scratch/dolsonem/evo_in_space/data
+STARTSEED=1200
+seed=$(($STARTSEED + $PBS_ARRAYID))
+JOBTARGET=env_50048"_"$seed
+
+#echo "seed="$seed "jobtarget="$JOBTARGET "targetdir="$TARGETDIR "pbs_arrayid="$PBS_ARRAYID "pbs_jobname="$PBS_JOBNAME "tmpdir="$TMPDIR;
+
+#change directory to the directory this was run from
+cd $PBS_O_WORKDIR
+mkdir $TMPDIR/$JOBTARGET
+cp -r $TARGETDIR/$JOBTARGET $TMPDIR/$JOBTARGET
+cd $TMPDIR/$JOBTARGET/$JOBTARGET
+
+gunzip -r *
+tar -xf *
+gunzip -r *
+gunzip -r data/*
+cd data
+
+python ../extract_points.py
+
+mv task_locs.csv $TARGETDIR/$JOBTARGET
+cd ..
+rm -r data
