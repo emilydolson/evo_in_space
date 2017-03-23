@@ -9,6 +9,6 @@ for filename in files:
     rep = filename.split("/")[-2].split("_")[-1]
     infile = open(filename)
     for line in infile.readlines():
-        outfile.write(line.strip() + "," + env + "\n")
+        outfile.write(line.strip() + "," rep + "," + env + "\n")
 
 outfile.close()
