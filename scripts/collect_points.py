@@ -7,7 +7,7 @@ files = glob.glob("*/task_locs.csv")
 for filename in files:
     env = filename.split("/")[-2]
     infile = open(filename)
-    for line in infile.readlines:
+    for line in infile.readlines():
         outfile.write(line.strip() + env + "\n")
 
 outfile.close()
