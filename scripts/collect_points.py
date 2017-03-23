@@ -8,6 +8,6 @@ for filename in files:
     env = filename.split("/")[-2]
     infile = open(filename)
     for line in infile.readlines():
-        outfile.write(line.strip() + env + "\n")
+        outfile.write(line.strip() + "," + env + "\n")
 
 outfile.close()
