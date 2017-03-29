@@ -4,7 +4,7 @@ import sys
 num = sys.argv[1]
 env = sys.argv[2]
 
-filenames = glob.glob("*env*/lineage_locs_"+num+".dat")
+filenames = glob.glob("*"+env+"*/lineage_locs_"+num+".dat")
 
 outfile = open("paths_"+num+"_"+env+".dat", "w")
 
