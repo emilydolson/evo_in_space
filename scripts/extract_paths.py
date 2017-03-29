@@ -5,7 +5,7 @@ num = sys.argv[1]
 
 filenames = glob.glob("*/lineage_locs_"+num+".dat")
 
-outfile = open("paths_"+num+".dat")
+outfile = open("paths_"+num+".dat", "w")
 
 for name in filenames:
     infile = open(name)
