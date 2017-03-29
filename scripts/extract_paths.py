@@ -13,6 +13,6 @@ for name in filenames:
     infile.close()
     path = [int(i) for i in path]
     path = [[i%60, i//60] for i in path]
-    outfile.write(path)
+    outfile.write(str(path))
 
 outfile.close()
