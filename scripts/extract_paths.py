@@ -3,14 +3,14 @@ import sys
 import avidaspatial
 
 num = sys.argv[1]
-env = sys.argv[2]
+env_id = sys.argv[2]
 
-filenames = glob.glob("*"+env+"*/lineage_locs_"+num+".dat")
+filenames = glob.glob("*"+env_id+"*/lineage_locs_"+num+".dat")
 
-env = avidaspatial.parse_environment_file("../config/env"+env+".cfg", (60, 60))
+env = avidaspatial.parse_environment_file("../config/env"+env_id+".cfg", (60, 60))
 
-outfile = open("paths_"+num+"_"+env+".dat", "w")
-outfile_env = open("env_seq_"+num+"_"+env+".dat", "w")
+outfile = open("paths_"+num+"_"+env_id+".dat", "w")
+outfile_env = open("env_seq_"+num+"_"+env_id+".dat", "w")
 
 for name in filenames:
     infile = open(name)
