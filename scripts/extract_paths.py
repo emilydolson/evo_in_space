@@ -23,7 +23,7 @@ for name in filenames:
     for loc in path:
         env_seq.append(sorted(list(env[loc[1]][loc[0]])))
 
-    outfile_env.write(",".join([str{i} for i in env_seq]) + "\n")
+    outfile_env.write(",".join([str(i) for i in env_seq]) + "\n")
 
 outfile.close()
 outfile_env.close()
