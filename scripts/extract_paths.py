@@ -7,7 +7,7 @@ env = sys.argv[2]
 
 filenames = glob.glob("*"+env+"*/lineage_locs_"+num+".dat")
 
-env = parse_environment_file("../config/env"+env+".cfg", (60, 60))
+env = avidaspatial.parse_environment_file("../config/env"+env+".cfg", (60, 60))
 
 outfile = open("paths_"+num+"_"+env+".dat", "w")
 outfile_env = open("env_seq_"+num+"_"+env+".dat", "w")
