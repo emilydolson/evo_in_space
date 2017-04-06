@@ -5,12 +5,12 @@
 #PBS -N env_50065
 #PBS -o /mnt/scratch/dolsonem/evo_in_space/data/env_50065_message.log
 #PBS -j oe
-#PBS -t 0-100
+#PBS -t 0-34
 #PBS -M dolsonem@msu.edu
 #PBS -l epilogue=/mnt/research/devolab/dist_qsub/email_final.sh
 
 TARGETDIR=/mnt/scratch/dolsonem/evo_in_space/data
-STARTSEED=1600
+STARTSEED=16000
 seed=$(($STARTSEED + $PBS_ARRAYID))
 JOBTARGET=env_50065"_"$seed
 
