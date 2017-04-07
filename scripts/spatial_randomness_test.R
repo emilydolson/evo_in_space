@@ -1,3 +1,4 @@
+args <- commandArgs(TRUE)
 library(spatstat)
 
 #Rename CSV so it can be accessed easily 
@@ -87,6 +88,6 @@ for (task in unique(data$task)) {
   for (environment in unique(data$environment)) {
     print(task)
     print(environment)
-    process.patterns(task, environment, bw=3, num.sims = 100000)
+    process.patterns(args[1], args[2], bw=3, num.sims = 100000)
   }
 }
