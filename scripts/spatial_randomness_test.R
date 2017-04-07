@@ -24,11 +24,11 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   #Matrix that will define differences between simulations and empirical data
   hotspots<-matrix(0,nrow=60, ncol=60)
     
-  if (sum(e$obs > e$hi | e$obs < e$lo) > .05*length(e$obs)) {
+  if (sum(e$obs > e$hi | e$obs < e$lo) < .05*length(e$obs)) {
     write.table(hotspots, file = paste0(c(task.num, env, "hotspots.csv"), collapse="_"), row.names = FALSE, col.names = FALSE, sep=",")
-    return
+    return()
   }
-  
+
   #Kernel Density of point pattern 
   task.density<-density(taskPP, sigma=bw, eps=1)
   png(paste0(c(task.num, env, "density.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
@@ -39,7 +39,7 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   uniformgrid<-rsyst(win=c(0,60,0,60), dx=1, dy=1)
   
   #Establishing some matrices, variables, etc.
-  cutoff<-1/num.sims
+  cutoff<-num.sims*.999
   simulations<-vector("list", num.sims)
   max.values<-vector("numeric", num.sims)
 
