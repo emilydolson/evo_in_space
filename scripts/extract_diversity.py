@@ -22,7 +22,7 @@ for dir_name in dir_list:
 
     for env in envs:
         ud = int(env.name.split(".")[-1])
-        env = agg_grid(env, mode)
+        env = agg_grid(env, lambda x; x[0])
         div_map = diversity_map(env)
         task = task_dict[ud+1]
         div = div_map[task[2]][task[1]]
