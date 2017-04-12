@@ -18,11 +18,12 @@ for dir_name in dir_list:
         sline = line.split(",")
         task_dict[int(sline[3])] = [int(i) for i in sline[:3]]
 
-    envs = parse_environment_file_list(glob.glob(dir_name+"/data/grid_task.*.dat"), (60, 60))
+    grids = glob.glob(dir_name+"/data/grid_task.*.dat")
+    envs = load_grid_data(grids)
 
-    for env in envs:
-        ud = int(env.name.split(".")[-1])
-        env = agg_grid(env, lambda x: x[0])
+    for j, env in enumerate(envs):
+        ud = int(grids[j].split(".")[-2])
+        env = agg_grid(env, mode)
         div_map = diversity_map(env)
         task = task_dict[ud+1]
         div = div_map[task[2]][task[1]]
