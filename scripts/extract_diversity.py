@@ -31,7 +31,7 @@ for dir_name in dir_list:
         div = div_map[task[2]][task[1]]
         rank = scipy.stats.percentileofscore(flatten_array(div_map), div)
 
-        data.append(",".join([str(i) for i in [env_num, ud, task[0], taxk[1], task[2], div, rank]]))
+        data.append(",".join([str(i) for i in [env_num, ud, task[0], task[1], task[2], div, rank]]))
 
 outfile = open("diversity_ranks.csv")
 outfile.write("\n".join(data))
