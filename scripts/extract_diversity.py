@@ -21,7 +21,7 @@ for dir_name in dir_list:
     envs = parse_environment_file_list(glob.glob(dir_name+"/data/grid_task.*.dat"), (60, 60))
 
     for env in envs:
-        ud = int(env.name.split(".")[-2])
+        ud = int(env.name.split(".")[-1])
         env = agg_grid(env, mode)
         div_map = diversity_map(env)
         task = task_dict[ud+1]
