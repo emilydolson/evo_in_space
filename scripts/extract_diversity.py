@@ -21,7 +21,7 @@ for dir_name in dir_list:
     grids = glob.glob(dir_name+"/data/grid_task.*.dat")
     envs = load_grid_data(grids)
 
-    for j in len(envs):
+    for j in range(len(envs)):
         ud = int(grids[j].split(".")[-2])
         env = load_grid_data(grids[j])
         env = agg_grid(env, mode)
