@@ -24,8 +24,9 @@ for dir_name in dir_list:
     for j, env in enumerate(envs):
         ud = int(grids[j].split(".")[-2])
         env = agg_grid(env, mode)
-        div_map = diversity_map(env)
+        div_map = diversity_map(env, func=get_25_neighbors)
         task = task_dict[ud+1]
+        print(task)
         div = div_map[task[2]][task[1]]
         rank = scipy.stats.percentileofscore(flatten_array(div_map), div)
 
