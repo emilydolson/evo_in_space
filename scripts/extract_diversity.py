@@ -9,7 +9,7 @@ data = ["env, ud, task, x, y, div, rank"]
 
 for dir_name in dir_list:
     env_num = dir_name.split("_")[-2]
-    task_loc_file = open(dir_name + "task_locs.csv")
+    task_loc_file = open(dir_name + "/task_locs.csv")
     task_locs = task_loc_file.readlines()
     task_loc_file.close()
 
