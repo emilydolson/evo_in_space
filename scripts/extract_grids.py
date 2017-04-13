@@ -11,4 +11,4 @@ loc_file.close()
 updates.sort()
 
 for update in updates:
-    shutil.copy("data/grid_task."+str(update)+".dat*", sys.argv[1])
+    shutil.copy("grid_task."+str(update)+".dat*", sys.argv[1])
