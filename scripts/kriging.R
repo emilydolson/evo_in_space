@@ -1,31 +1,32 @@
 library(spatstat)
-# library(gstat)
+library(gstat)
 library(spdep)
 # library(rgdal)
 
-data <- read.csv("all_task_locs.csv")
+data <- read.csv("~/geo866/evo_in_space/data/all_task_locs.csv")
 envs <- unique(data$environment)
-all_resources <- data.frame(x=double(), y=double(), not=integer(), nand=integer(), and=integer(), orn=integer(), or=integer(), andn=integer(), nor=integer(), xor=integer(), equ=integer(), density=double())
-
+all_resources <- data.frame(x=double(), y=double(), count=integer(), not=integer(), nand=integer(), and=integer(), orn=integer(), or=integer(), andn=integer(), nor=integer(), xor=integer(), equ=integer(), env="", density=double())
+all_resources <- data.frame()
 i <- 1
 for (env in envs){
   env_data <- subset(data, data$environment == env)
-  env_data_ppp <- ppp(env_data$x, env_data$y, c(0,59), c(0,59))
+  env_data_ppp <- ppp(env_data$x, env_data$y, c(0,60), c(0,60))
   env_density <- density(env_data_ppp, bw=3, eps=1)
   env_density$v <- env_density$v/sum(env_density$v)
   resources <- read.csv(paste0("env",env,".csv", sep=""))
-  density <- vector("numeric", 59*59)
+  density <- vector("numeric", 60*60)
 
   for (line in 1:length(resources$x)) {
     density[line] <- env_density$v[resources$x[line]+1,resources$y[line]+1]
   }
   resources$density <- density
-  resources$x <- resources$x+(i+59)
-  resources$y <- resources$y+(i+59)
+  #resources$x <- resources$x+(i+59)
+  #resources$y <- resources$y+(i+59)
+  resources$env <- env
   i <- i+1
   all_resources <- rbind(all_resources, resources)
-
-  #spatial_data <- remove.duplicates(SpatialPointsDataFrame(data.frame(all_resources$x, all_resources$y), all_resources))
+}
+  spatial_data <- remove.duplicates(SpatialPointsDataFrame(data.frame(all_resources$x, all_resources$y), all_resources))
   #print(env)
   # res_lm <- lm(density~ (not==0) + (nand==0) + (and==0) + (or==0) + (nor==0) + (xor==0) + (andn==0) + (orn==0), data=resources)
   # print(summary(res_lm))

@@ -13,14 +13,14 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   #print(task)
   #Create point pattern object for the data
   taskPP<-ppp(task$x, task$y, c(0,60), c(0,60))
-  e <- envelope(taskPP, Kest, funargs = list(correction="isotropic"), nsim=1000)
-  png(paste0(c(task.num, env, "k-hat.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
-  plot(e, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
-  dev.off()
+  #e <- envelope(taskPP, Kest, funargs = list(correction="isotropic"), nsim=1000)
+  #png(paste0(c(task.num, env, "k-hat.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
+  #plot(e, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
+  #dev.off()
   png(paste0(c(task.num, env, "points.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
   plot(taskPP, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
   dev.off()
-
+}
   
   #Matrix that will define differences between simulations and empirical data
   hotspots<-matrix(0,nrow=60, ncol=60)
