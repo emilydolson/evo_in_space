@@ -1,39 +1,50 @@
 library(spatstat)
-# library(gstat)
+library(gstat)
 library(spdep)
 # library(rgdal)
 
-data <- read.csv("all_task_locs.csv")
+data <- read.csv("~/geo866/evo_in_space/data/all_task_locs.csv")
 envs <- unique(data$environment)
-all_resources <- data.frame(x=double(), y=double(), not=integer(), nand=integer(), and=integer(), orn=integer(), or=integer(), andn=integer(), nor=integer(), xor=integer(), equ=integer(), density=double())
-
+all_resources <- data.frame(x=double(), y=double(), count=integer(), not=integer(), nand=integer(), and=integer(), orn=integer(), or=integer(), andn=integer(), nor=integer(), xor=integer(), equ=integer(), env="", density=double())
+all_resources <- data.frame()
 i <- 1
 for (env in envs){
   env_data <- subset(data, data$environment == env)
-  env_data_ppp <- ppp(env_data$x, env_data$y, c(0,59), c(0,59))
+  env_data_ppp <- ppp(env_data$x, env_data$y, c(0,60), c(0,60))
   env_density <- density(env_data_ppp, bw=3, eps=1)
   env_density$v <- env_density$v/sum(env_density$v)
+  
+  #Get data on distances of each resource
   resources <- read.csv(paste0("env",env,".csv", sep=""))
-  density <- vector("numeric", 59*59)
+  density <- vector("numeric", 60*60)
 
   for (line in 1:length(resources$x)) {
     density[line] <- env_density$v[resources$x[line]+1,resources$y[line]+1]
   }
   resources$density <- density
-  resources$x <- resources$x+(i+59)
-  resources$y <- resources$y+(i+59)
+  #resources$x <- resources$x+(i+59)
+  #resources$y <- resources$y+(i+59)
+  resources$env <- env
   i <- i+1
   all_resources <- rbind(all_resources, resources)
 
-  #spatial_data <- remove.duplicates(SpatialPointsDataFrame(data.frame(all_resources$x, all_resources$y), all_resources))
+  spatial_data <- remove.duplicates(SpatialPointsDataFrame(data.frame(all_resources$x, all_resources$y), resources))
   #print(env)
+  
+  #Try presence/absence models
   # res_lm <- lm(density~ (not==0) + (nand==0) + (and==0) + (or==0) + (nor==0) + (xor==0) + (andn==0) + (orn==0), data=resources)
   # print(summary(res_lm))
+
+  #Try distance model
   res_lm <- lm(density~ not + nand + and + or + nor + xor + andn + orn, data=resources)
   
+  #Mabe log transforming will help?
   #res_lm <- lm(density~ log(1+not) + log(1+nand) + log(1+and) + log(1+or) + log(1+nor) + log(1+xor) + log(1+andn) + log(1+orn), data=resources)
   
   print(summary(res_lm))
+
+  # Maybe some spatial regression?
+
   # vario <- variogram(density~not+nand+and+or+xor, spatial_data)
   # plot(vario)
   # mod <- vgm(nugget=.00001, range=35, model="Sph", psill = 5.5e-04)
@@ -46,6 +57,8 @@ for (env in envs){
   # spplot(krige_results['var1.pred'], col.regions=colorRampPalette(c('deepskyblue', "white", 'yellow', 'orangered'))(20))
   # not <- subset(resources, xor==1)
   # plot(density(ppp(not$x, not$y, c(0,59), c(0,59)), bw=3))
+
+  #Let's try to make an adjacency matric for all environments
 
   adj <- matrix(ncol=59*59, nrow=59*59, 0)
 
@@ -121,4 +134,10 @@ for (env in envs){
   print(cor(splm$fit$signal_trend, resources$density))
   plot(splm$fit$signal_trend, resources$density, xlab="SAR Trend", ylab="Density")
   plot(splm$fit$fitted.values, resources$density, xlab="SAR Fitted Values", ylab="Density")
+
+  #nope. none of this helps.
+
 }
+
+# Does it generalize? No
+res_lm <- lm(density~ not + nand + and + or + nor + xor + andn + orn, data=all_resources)
