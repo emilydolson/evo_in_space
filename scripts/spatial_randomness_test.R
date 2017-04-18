@@ -1,30 +1,33 @@
 args <- commandArgs(TRUE)
+#Command-line arg 1 is task number, arg 2 is environment
 library(spatstat)
 
-#Rename CSV so it can be accessed easily 
+setwd("../figs")
 data<-read.csv("all_task_locs.csv")
 
 #Function to process all point patterns:
-
 process.patterns <- function(task.num, env, bw=3, num.sims=10) {
 
   task<-subset(data, data$task==task.num & data$environment == env)
-  #task <- 
-  #print(task)
+
   #Create point pattern object for the data
   taskPP<-ppp(task$x, task$y, c(0,60), c(0,60))
-  #e <- envelope(taskPP, Kest, funargs = list(correction="isotropic"), nsim=1000)
-  #png(paste0(c(task.num, env, "k-hat.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
-  #plot(e, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
-  #dev.off()
+  
+  # Do Ripley's K test
+  e <- envelope(taskPP, Kest, funargs = list(correction="isotropic"), nsim=1000)
+  png(paste0(c(task.num, env, "k-hat.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
+  plot(e, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
+  dev.off()
+
+  #Print points
   png(paste0(c(task.num, env, "points.png"), collapse="_"), width=1000, height=1000, pointsize = 18)
   plot(taskPP, main=paste0(c("Task ", task.num, ", Environment: ", env), collapse = ""))
   dev.off()
-}
   
   #Matrix that will define differences between simulations and empirical data
   hotspots<-matrix(0,nrow=60, ncol=60)
-    
+
+  # Stop if there isn't substantial deviation from random    
   if (sum(e$obs > e$hi | e$obs < e$lo) < .05*length(e$obs)) {
     write.table(hotspots, file = paste0(c(task.num, env, "hotspots.csv"), collapse="_"), row.names = FALSE, col.names = FALSE, sep=",")
     return()
@@ -84,10 +87,5 @@ process.patterns <- function(task.num, env, bw=3, num.sims=10) {
   write.table(hotspots, file = paste0(c(task.num, env, "hotspots.csv"), collapse="_"), row.names = FALSE, col.names = FALSE, sep=",")
 }
 
-for (task in unique(data$task)) {
-  for (environment in unique(data$environment)) {
-    print(task)
-    print(environment)
-    process.patterns(args[1], args[2], bw=3, num.sims = 100000)
-  }
-}
+#Call function
+process.patterns(args[1], args[2], bw=3, num.sims = 100000)
