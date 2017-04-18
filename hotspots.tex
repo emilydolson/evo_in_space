@@ -142,14 +142,14 @@ Our extracted (x,y) coordinates translate into 72 separate point patterns (see F
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=3.35in]{statsfig_horziontal_1col.png}
+\includegraphics[width=3.35in]{figs/statsfig_horziontal_1col.png}
 \caption{Hotspot location technique. A) An example point pattern, generated from 100 runs of Avida within a single environment. This pattern corresponds to the most complex trait, EQU. Each point represents the location in space of the first organism within one of the 100 runs that was able to perform EQU. B) Kernel intensity map generated from the point pattern in part A. C) Regions within that kernel intensity map that are substantially more intense than observed in the Monte Carlo simulations (i.e. the hotspot).}
 \label{stats}
 \end{center}
 \end{figure}
 \begin{figure}[t]
 \begin{center}
-\includegraphics[width=2.5in]{9_50013_k-hat.png}
+\includegraphics[width=2.5in]{figs/9_50013_k-hat.png}
 \caption{Results of performing the test for spatial clumping on the point pattern from Figure \ref{stats}A. The observed values of the test statistic are well above the values observed in the Monte Carlo simulations (shaded area), so we conclude that there is clumping in this pattern. The red line indicates the theoretically derived expected value for a random pattern.}. 
 \label{khat}
 \end{center}
@@ -166,7 +166,7 @@ For the overall randomness test, we calculated a test statistic for various dist
 \begin{figure*}[t]
 \begin{center}
 %\includegraphics[width=2.1in]{50065_all_hotspots.png}
-\includegraphics[width=7in]{50065_all_hotspots.png}
+\includegraphics[width=7in]{figs/50065_all_hotspots.png}
 \caption{Hotspots across all traits and all environments. Each panel represents a different environment. Background colors represent the different combinations of resources that are present in each location; each color represents a different combination, with colors assigned such that higher hue values %@CAO: Are readers going to know what higher hue values are? I assume they're ordered that same as the rainbow? @ELD: I would really hope so, but maybe not. They are ordered the same as the rainbow, but I'm not sure how to see that succinctly (normally I'd say "cooler colors", but that magenta isn't very cool)
 roughly correspond to more complex environments (either in number of resources or complexity of traits associated with resources). Each polygon color represents the outline of hotspots for the trait specified in the legend. Note that only hotspots significant at an alpha-level of .00001 are shown. This conservative value was necessary to be certain that hotspots are present despite the large number of hypothesis tests performed. However, in practice, it likely translates to an underestimation of the true size of many of the hotspots.}
 \label{hotspots}
@@ -199,7 +199,7 @@ Many hotspots appear to overlap with borders between different combinations of r
 \begin{figure}[t]
 \begin{center}
 %\includegraphics[width=2.1in]{50065_all_hotspots.png}
-\includegraphics[width=2.8in]{localdiversity.png}
+\includegraphics[width=2.8in]{figs/localdiversity.png}
 \caption{Quantile-quantile plot comparing the distribution of diversity ranks observed for the most complex trait (EQU) to a uniform distribution \citep{oldford_qqtest:_2016}. The blue points compare the values of points at the equivalent percentiles of the two distributions. The shaded area represents the region where we would expect these points to fall if these distributions were identical. Since the points are, for the most part, within this area, we conclude that the distribution of ranks does not deviate substantially from a uniform distribution. This finding suggests that there is nothing special about the diversity in the regions where traits are more likely to evolve, relative to the diversity in the rest of the environment. Results for other complex traits are similar.}
 \label{diversity}
 \end{center}
@@ -214,7 +214,7 @@ Many hotspots appear to overlap with borders between different combinations of r
 \begin{figure*}[t]
 \begin{center}
 %\includegraphics[width=2.1in]{50065_all_hotspots.png}
-\includegraphics[width=5in]{control_9_paths.png}
+\includegraphics[width=5in]{figs/control_9_paths.png}
 \caption{Spatial paths taken by the first lineages to evolve the most complex trait (EQU) from five arbitrarily-selected replicates from each environment. The path from each replicate is colored a different shade of gray. As in Figure \ref{hotspots}, background colors represent the set of resources in each part of the environment. I) shows the homogeneous control environment.}
 \label{paths}
 \end{center}
