@@ -5,6 +5,7 @@ By Emily Dolson and Charles Ofria
 (submitted to the European Conference on Artificial Life, 2017)
 
 ![](figs/50065_all_hotspots.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Contents:
 - *hotspots.tex* -  LaTeX file for main paper
