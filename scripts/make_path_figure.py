@@ -16,9 +16,6 @@ if len(sys.argv) > 2:
     task_id = int(sys.argv[2])
 
 draw_points = "paths"
-if len(sys.argv) > 3:
-    draw_points = sys.argv[3]
-
 envs = parse_environment_file_list(["../config/env"+str(env_id)+".cfg" for env_id in env_ids], (60,60))
 
 
@@ -49,7 +46,7 @@ patch_handles = []
 for fig_num in range(1,10):
     plt.subplot(3, 3, fig_num)
 
-    #paired_environment_phenotype_grid(env, hotspots, palette=env.task_palette)
+    paired_environment_phenotype_grid(env, hotspots, palette=env.task_palette)
     plot_world(envs[fig_num-1], palette=envs[fig_num-1].resource_palette)
 
 
@@ -108,7 +105,7 @@ for fig_num in range(1,10):
             ax.add_line(plt.Line2D(xs, ys, linewidth=1, color=colors[i]))
 
         pathfile.close()
-        ax.text(0.02, 0.98, letters[fig_num-1], transform=ax.transAxes,fontsize=18, va='top')                
+
     #plt.show()
 
 name = "all" if len(ids)>1 else str(task_id)
@@ -124,4 +121,4 @@ name += "_" + draw_points
 #                     loc="lower center", borderaxespad=0., frameon=True, ncol=9)
 # legend.get_frame().set_facecolor('lightgrey')
 # plt.tight_layout()
-plt.savefig("../"+str(env_id)+"_" + name+".png", bbox_inches = 'tight', pad_inches = 0, dpi=1000)
+plt.savefig("../figs/"+str(env_id)+"_" + name+".png", bbox_inches = 'tight', pad_inches = 0, dpi=1000)

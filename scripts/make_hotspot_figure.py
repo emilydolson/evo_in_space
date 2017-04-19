@@ -13,12 +13,8 @@ env_ids = [50013, 50047, 50048, 50060, 50061, 50062, 50063, 50065]
 task_list = ["NOT", "NAND", "AND", "ORN", "OR", "ANDN", "NOR", "XOR", "EQU"]
 
 task_id=0
-if len(sys.argv) > 2:
-    task_id = int(sys.argv[2])
 
 draw_points = "hotspots"
-if len(sys.argv) > 3:
-    draw_points = sys.argv[3]
 
 envs = parse_environment_file_list(["../config/env"+str(env_id)+".cfg" for env_id in env_ids], (60,60))
 
@@ -40,8 +36,6 @@ for env in envs:
 linestyles = ["-", "--", "-", "-", "-", ":", "-", "--","--"]
 letters = ["A", "B", "C", "D","E", "F","G","H","I"]
 ids = list(range(9,0,-1))
-if task_id != 0:
-    ids = [task_id]
 
 plt.Figure()
 
@@ -128,4 +122,4 @@ legend = plt.legend(by_label.values(), by_label.keys(),
                     loc="lower center", borderaxespad=0., frameon=True, ncol=9)
 legend.get_frame().set_facecolor('lightgrey')
 plt.tight_layout()
-plt.savefig("../figs"+str(env_id)+"_" + name+".png", bbox_inches = 'tight', pad_inches = 0)
+plt.savefig("../figs/"+str(env_id)+"_" + name+".png", bbox_inches = 'tight', pad_inches = 0)
