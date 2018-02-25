@@ -2,6 +2,7 @@ This repository contains figures, scripts, and data for the paper:
 
 # Spatial resource heterogeneity creates local hotspots of evolutionary potential
 By Emily Dolson and Charles Ofria
+
 European Conference on Artificial Life, 2017
 
 ![](figs/50065_all_hotspots.png)
