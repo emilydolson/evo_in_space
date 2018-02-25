@@ -2,11 +2,11 @@ This repository contains figures, scripts, and data for the paper:
 
 # Spatial resource heterogeneity creates local hotspots of evolutionary potential
 By Emily Dolson and Charles Ofria
-(submitted to the European Conference on Artificial Life, 2017)
+European Conference on Artificial Life, 2017
 
 ![](figs/50065_all_hotspots.png)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
+[![Paper:10.7551/ecal_a_023](https://img.shields.io/badge/DOI-10.7551%2F978&#8208;0&#8208;262&#8208;33936&#8208;0&#8208;ch071-green.svg)](http://cognet.mit.edu/proceed/10.7551/ecal_a_023)
 ## Contents:
 - *hotspots.tex* -  LaTeX file for main paper
 - *alifeconf.sty* - Style file for ECAL
